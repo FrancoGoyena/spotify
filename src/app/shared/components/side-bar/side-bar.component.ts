@@ -1,7 +1,6 @@
 import { query } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'
-import { TrackService } from '@modules/tracks/services/track.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -13,7 +12,7 @@ export class SideBarComponent {
   mainMenu:{defaultOptions: Array<any>,accessLink: Array<any>} = {defaultOptions:[], accessLink:[]}
 
   customOptions: Array<any> = []
-  constructor(private router:Router, private trackService:TrackService){}
+  constructor(private router:Router){}
 
   ngOnInit(): void{
     this.mainMenu.defaultOptions=[
@@ -64,17 +63,23 @@ export class SideBarComponent {
         router:['/']
       }
     ]
-    this.trackService.dataTracksRandom$
-    .subscribe((response: any) =>{
-      this.customOptions.push({
-        name: response[0].name,
-        router:[]
-      })
-    })
+    //this.trackService.dataTracksRandom$
+    //.subscribe((response: any) =>{
+    //  this.customOptions.push({
+    //    name: response[0].name,
+    //    router:[]
+    //  })
+    //})
 
   }
-  goTo($event:any):void{
-    this.router.navigate([''])
+  goTo($event: any): void {
+    this.router.navigate(['/', 'favorites'], {
+      queryParams: {
+        key1: 'value1',
+        key2: 'value2',
+        key3: 'value3'
+      }
+    })
     console.log($event)
   }
 }
