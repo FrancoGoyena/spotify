@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.models';
-import { SearchComponent } from '@modules/history/components/search/search.component';
 import { SearchService } from '@modules/history/services/search.service';
 import { Observable, of } from 'rxjs';
 
