@@ -12,7 +12,7 @@ export class HistoryPageComponent {
   listResults$:Observable<any>=of([])
   constructor(private searchService:SearchService){}
   receiveData(event:string):void{
-    console.log('estoy en el padre',event)
+    console.log(event)
     this.listResults$=this.searchService.searchTracks$(event)
   }
 }

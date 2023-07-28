@@ -18,11 +18,11 @@ export class AuthPageComponent {
   ngOnInit():void{
     this.formLogin=new FormGroup(
       {
-        email:new FormControl('',[
+        email:new FormControl('franco@franco.com',[
           Validators.required,
           Validators.email
         ]),
-        password:new FormControl('',[
+        password:new FormControl('12345678',[
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(12)
@@ -38,6 +38,7 @@ export class AuthPageComponent {
       console.log('Sesion iniciada correctamente', responseOk);
       const {tokenSession, data} = responseOk
       this.cookie.set('token', tokenSession, 4, '/')
+      this.cookie.set('role', data.role, 4, '/')
       this.router.navigate(['/','tracks'])
     },
     err=>{

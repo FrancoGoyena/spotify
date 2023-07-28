@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { roleGuard } from '@core/guards/role.guard';
+import { SessionGuard } from '@core/guards/session.guard';
 
 
 const routes: Routes = [
@@ -14,6 +16,11 @@ const routes: Routes = [
   {
     path: 'history',
     loadChildren: () => import('@modules/history/history.module').then(m => m.HistoryModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('@modules/admin/admin.module').then(m => m.AdminModule),
+    canActivate:[roleGuard]
   },
   {
     path: '**',//TODO 404 cuando no existe la ruta

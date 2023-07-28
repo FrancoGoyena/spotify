@@ -1,0 +1,85 @@
+<div class="admin-page">
+    <app-search (callbackData)="receiveData($event)"></app-search>
+    <h1>Agregar cancion</h1>
+    <form (ngSubmit)="sendASong()" [formGroup]="formSong" class="Song-add-form">
+        <div class="form-group">
+            <input formControlName="name" type="text" placeholder="Nombre" class="form-input" >
+        </div>
+        <div class="form-group">
+            <input formControlName="album" type="text" placeholder="Album" class="form-input">
+        </div>
+        <div class="form-group">
+            <input formControlName="cover" type="text" placeholder="Cover" class="form-input">
+        </div>
+        <div class="form-group">
+            <input formControlName="artist" type="text" placeholder="Artista" class="form-input">
+        </div>
+        <div *ngIf="errorSession">
+            Ocurrio un error con un dato
+        </div>
+        <div class="form-action">
+            <button [disabled]="formSong.invalid" class="add song-btn">Agregar cancion</button>
+        </div>
+    </form>
+<div *ngIf="mostrarForm && trackToEdit">
+    <h1>Editar cancion</h1>
+    <form (ngSubmit)="editASong(trackToEdit)" [formGroup]="formEditSong" class="Song-Edit-form">
+        <div class="form-group">
+            <input formControlName="name" type="text" placeholder="Nombre" class="form-input" [ngModel]="trackToEdit.name">
+        </div>
+        <div class="form-group">
+            <input formControlName="album" type="text" placeholder="Album" class="form-input" [ngModel]="trackToEdit.album">
+        </div>
+        <div class="form-group">
+            <input formControlName="cover" type="text" placeholder="Cover" class="form-input" [ngModel]="trackToEdit.cover">
+        </div>
+        <div class="form-group">
+            <input formControlName="artist" type="text" placeholder="Artista" class="form-input" [ngModel]="trackToEdit.artist">
+        </div>
+        <div *ngIf="errorSession">
+            Ocurrio un error con un dato
+        </div>
+        <div class="form-action">
+            <button [disabled]="formEditSong.invalid" class="add song-btn">Editar cancion</button>
+        </div>
+    </form>
+</div>
+    <div class="play-list-body">
+        <ul class="play-list-table-header">
+            <li>nombre </li>
+            <li>álbum </li>
+            <li>Artista</li>
+            <li>Administracion</li>
+        </ul>
+        <ul class="play-list-rows" *ngFor="let track of (listResults$ | async)">
+            <li class="track-name">
+                <ng-container *ngTemplateOutlet="coverSection;context:{track:track}"></ng-container>
+            </li>
+            <li class="track-name-opacity">
+                {{track.album}}
+            </li>
+            <li class="track-name-opacity">
+                {{track.artist}}
+            </li>
+            <li class="track-name-opacity">
+                <div class="icons">
+                    <li><button (click)="deleteSong(track)" class="delete-button">Borrar<i class="uil uil-trash"></i></button>
+                    <button (click)="mostrarOcultarFormulario(track)" class="edit-button">Editar<i class="uil uil-edit"></i></button></li>
+                </div>
+            </li>
+            
+    
+        </ul>
+    </div>
+    <ng-template #coverSection let-track="track">
+
+        <div class="cover-section">
+            <img appImgBroken class="cover-track" [src]="track.cover" [alt]="track.name">
+            <div class="cover-info">
+                <div class="name-track">{{track.name}}</div>
+                <div class="name-track-details">{{track.artist.name}}</div>
+            </div>
+        </div>
+    
+    </ng-template>
+</div>

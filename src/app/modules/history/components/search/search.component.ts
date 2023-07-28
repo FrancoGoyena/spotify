@@ -9,7 +9,7 @@ export class SearchComponent {
   @Output() callbackData:EventEmitter<any>=new EventEmitter()
   src:string=''
   callSearch(term: string): void {
-    if (term.length >= 3) {
+    if (term.length >= 0) {
       this.callbackData.emit(term)
       console.log('🔴 Llamamos a nuestra API HTTP GET---> ', term);
     }

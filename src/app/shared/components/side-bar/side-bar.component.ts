@@ -1,6 +1,7 @@
 import { query } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-side-bar',
@@ -12,9 +13,11 @@ export class SideBarComponent {
   mainMenu:{defaultOptions: Array<any>,accessLink: Array<any>} = {defaultOptions:[], accessLink:[]}
 
   customOptions: Array<any> = []
-  constructor(private router:Router){}
+  constructor(private router:Router, private cookieService:CookieService){}
+
 
   ngOnInit(): void{
+    const role: string = this.cookieService.get('role')
     this.mainMenu.defaultOptions=[
       {
         name:'Home',
@@ -29,11 +32,16 @@ export class SideBarComponent {
       {
         name:'Tu biblioteca',
         icon:'uil uil-chart',
-        router:['/','favorites'],
-        query:{hola:'mudo'}
+        router:['/','favorites']
       }
     ]
-
+    if(role=='admin'){
+      this.mainMenu.defaultOptions.push({
+        name:'Administracion',
+        icon:'uil uil-padlock',
+        router:['/','admin'],
+      })
+    }
     this.mainMenu.accessLink=[
       {
         name:'Crear lista',
@@ -72,6 +80,7 @@ export class SideBarComponent {
     //})
 
   }
+  
   goTo($event: any): void {
     this.router.navigate(['/', 'favorites'], {
       queryParams: {
